@@ -34,7 +34,7 @@ Currently, supported brokers are:
 
 - Redis
 
-   We'll be happy if you want to contribute adding new brokers! :)
+>   We'll be happy if you want to contribute adding new brokers! :)
 
 ## Redis examples
 
