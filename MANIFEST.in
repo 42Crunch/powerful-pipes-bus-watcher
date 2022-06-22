@@ -1,4 +1,4 @@
-include README.md VERSION, requirements.txt
+include README.md VERSION requirements.txt
 
 recursive-exclude * __pycache__
 recursive-exclude * *.pyc
