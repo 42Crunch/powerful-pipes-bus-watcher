@@ -18,7 +18,7 @@ def run(connection: BusInterface, config: RunningConfig):
 
 
 def main():
-    banner = 'Powerful Piepes WatchBus tool'
+    banner = 'Powerful Pipes WatchBus tool'
 
     parser = argparse.ArgumentParser(
         description=banner
