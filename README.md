@@ -1,5 +1,5 @@
 *****************************************************************************
-Powerful Pipes Watcher - The power of UNIX Pipes
+Powerful Pipes Watcher - Multi-broker watcher tool with the power of UNIX Pipes
 *****************************************************************************
 
 ![License](https://img.shields.io/badge/License-Apache2-SUCCESS)
