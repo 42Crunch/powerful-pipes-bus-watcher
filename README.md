@@ -40,7 +40,7 @@ Currently, supported brokers are:
 
 Bus connections for Redis should look like:
 
-- redis://[[user]:[password]@][host][:port][/db=INTEGER]
+`redis://[[user]:[password]@][host][:port][/db=INTEGER]`
 
 Default values:
 
