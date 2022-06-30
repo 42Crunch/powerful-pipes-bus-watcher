@@ -3,7 +3,7 @@ Powerful Pipes Watcher - Multi-broker watcher tool with the power of UNIX Pipes
 *****************************************************************************
 
 ![License](https://img.shields.io/badge/License-Apache2-SUCCESS)
-![Pypi](https://img.shields.io/pypi/v/powerful-pipes-bus-watcher-watcher)
+![Pypi](https://img.shields.io/pypi/v/powerful-pipes-watch-bus)
 ![Versions](https://img.shields.io/badge/Python-3.8%20%7C%203.9%20%7C%203.10-blue)
 
 ![Logo](https://raw.githubusercontent.com/42Crunch/powerful-pipes-bus-watcher/main/docs/logo-250x250.png)
