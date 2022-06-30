@@ -5,8 +5,8 @@ from argparse import Namespace
 
 @dataclass
 class RunningConfig:
-    queue_name: str
-    bus_connection: List[str]
+    queue_name: List[str]
+    bus_connection: str
     debug: bool = False
     banner: bool = False
 

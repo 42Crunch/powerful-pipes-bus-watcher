@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Iterator
 from urllib.parse import urlparse, parse_qsl
 
+import orjson
 import redis
 
 from powerful_pipes import read_json
@@ -30,6 +31,9 @@ class RedisBus(BusInterface):
                 break
 
             yield read_json(message)
+
+    def send_json_message(self, queue_name: str, data: dict):
+        self._connection.rpush(queue_name, orjson.dumps(data))
 
 
     @classmethod

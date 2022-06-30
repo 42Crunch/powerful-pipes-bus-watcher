@@ -1,14 +1,18 @@
 import sys
 import argparse
 
+from concurrent.futures import ThreadPoolExecutor
+
 from powerful_pipes import report_exception, write_json_to_stdout
 
 from .config import RunningConfig
 from .brokers import connect_bus, BusInterface
 
-def run(connection: BusInterface, config: RunningConfig):
+def run_queue(queue: str, config: RunningConfig):
 
-    for message in connection.read_json_messages(config.queue_name):
+    connection: BusInterface = connect_bus(config.bus_connection)
+
+    for message in connection.read_json_messages(queue):
 
         try:
             write_json_to_stdout(message, force_flush=True)
@@ -16,6 +20,15 @@ def run(connection: BusInterface, config: RunningConfig):
         except Exception as e:
             report_exception({}, e)
 
+def run(config: RunningConfig):
+
+    with ThreadPoolExecutor(max_workers=len(config.queue_name)) as executor:
+
+        for queue in config.queue_name:
+            executor.submit(run_queue, queue, config)
+
+        # Wait for tasks
+        executor.shutdown(wait=True)
 
 def main():
     banner = 'Powerful Pipes WatchBus tool'
@@ -36,7 +49,8 @@ def main():
                         help="bus connections. Default: 'Redis://'")
 
     parser.add_argument('-q', '--queue-name',
-                        required=True,
+                        action='append',
+                        # required=True,
                         help="bus name where listen to")
 
     parsed = parser.parse_args()
@@ -46,14 +60,16 @@ def main():
     if config.banner:
         print(f"[*] Starting {banner}", flush=True, file=sys.stderr)
 
+    # Check Redis connection
     try:
-        con = connect_bus(config.bus_connection)
+        _con = connect_bus(config.bus_connection)
+        del _con
     except Exception as e:
         print(e)
         exit(1)
 
     else:
-        run(con, config)
+        run(config)
 
 
 if __name__ == '__main__':
