@@ -17,7 +17,7 @@ def run_queue(queue: str, config: RunningConfig):
         if error:
             continue
 
-        connection.send_json_message(queue, input_json)
+        connection.send_json_message(input_json, queue)
 
 def run(config: RunningConfig):
 
@@ -45,11 +45,11 @@ def main():
                         help="enable debug mode")
     parser.add_argument('-c', '--bus-connection',
                         default="redis://",
+                        required=True,
                         help="bus connections. Default: 'Redis://'")
 
     parser.add_argument('-q', '--queue-name',
                         action='append',
-                        # required=True,
                         help="bus name where listen to")
 
     parsed = parser.parse_args()

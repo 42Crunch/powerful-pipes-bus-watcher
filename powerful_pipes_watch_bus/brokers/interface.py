@@ -13,11 +13,11 @@ class BusInterface(metaclass=abc.ABCMeta):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def read_json_messages(self, queue_name: str) -> Iterator[dict]:
+    def read_json_messages(self, queue_name: str = None) -> Iterator[dict]:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def send_json_message(self, queue_name: str, data: dict):
+    def send_json_message(self, data: dict, queue_name: str = None):
         raise NotImplementedError()
 
 

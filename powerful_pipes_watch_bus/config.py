@@ -5,10 +5,10 @@ from argparse import Namespace
 
 @dataclass
 class RunningConfig:
-    queue_name: List[str]
     bus_connection: str
     debug: bool = False
     banner: bool = False
+    queue_name: List[str] = field(default_factory=lambda: ["default"])
 
     @classmethod
     def from_cli(cls, parsed: Namespace):

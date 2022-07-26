@@ -82,15 +82,18 @@ With this command sendBus will send data to two broker queues.
 
 Currently, supported brokers are:
 
-- Redis
+- Redis Pub/Sub
+- Redis simple Queue listener
 
 >   We'll be happy if you want to contribute adding new brokers! :)
 
 ## Redis examples
 
+### Redis Simple Queue Listener
+
 Bus connections for Redis should look like:
 
-`redis://[[user]:[password]@][host][:port][/db=INTEGER]`
+`redis://[[user]:[password]@][host][:port][/?db=INTEGER][&queue=STRING]]`
 
 Default values:
 
@@ -99,6 +102,24 @@ Default values:
 - Host: 127.0.0.1
 - port: 6379
 - db: 1
+- queue: default
+
+### Redis Pub / Sub
+
+Bus connections for Redis should look like:
+
+`redis+pubsub://[[user]:[password]@][host][:port][/?[db=INTEGER][&channel=STRING]]`
+
+> channel is the pub/sub channel to listen for.
+
+Default values:
+
+- user: Null
+- password: Null
+- Host: 127.0.0.1
+- port: 6379
+- db: 1
+- channel: default
 
 # Authors
 
