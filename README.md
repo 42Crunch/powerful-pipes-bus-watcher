@@ -83,6 +83,7 @@ With this command sendBus will send data to two broker queues.
 Currently, supported brokers are:
 
 - Redis Pub/Sub
+- Redis Streams
 - Redis simple Queue listener
 
 >   We'll be happy if you want to contribute adding new brokers! :)
@@ -120,6 +121,35 @@ Default values:
 - port: 6379
 - db: 1
 - channel: default
+
+### Redis Streams
+
+Bus connections for Redis should look like:
+
+`redis+streams://[[user]:[password]@][host][:port]/?stream=STRING[&db=INTEGER][&group=STRING][&consumer=STRING][&timeout=INTEGER][&batch_size=INTEGER]`
+
+This mode can works as a consumer or as a producer, depending on the parameters.
+
+**Consumer**
+
+If you want to use the Redis Streams as a consumer, you should specify the `group` and `consumer` parameters.
+
+**Producer**
+
+If you want to use the Redis Streams as a producer, you should specify ONLY the `stream` parameter.
+
+**Mandatory parameters**
+
+- stream: The stream name to listen for.
+
+Default values:
+
+- user: Null
+- password: Null
+- Host: 127.0.0.1
+- port: 6379
+- db: 1
+- consumer: "auto" (will be generated automatically)
 
 # Authors
 
