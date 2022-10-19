@@ -88,7 +88,7 @@ You also can use ``Powerful Pipes Watcher`` as a Python library in your Python c
 from powerful_pipes_watch_bus import connect_bus
 
 def main():
-  redis_connection = connect_bus("redis+pubsub://localhost:6379/db=0&channel=my-channel")
+  redis_connection = connect_bus("redis+pubsub://localhost:6379/?db=0&channel=my-channel")
   
   for message in redis_connection.read_json_messages():
     redis_connection.send_json_message(message, "my-other-queue")
