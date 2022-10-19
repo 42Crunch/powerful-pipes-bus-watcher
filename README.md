@@ -1,6 +1,4 @@
-*****************************************************************************
-Powerful Pipes Watcher - Multi-broker watcher tool with the power of UNIX Pipes
-*****************************************************************************
+# Powerful Pipes Watcher - Multi-broker watcher tool with the power of UNIX Pipes
 
 ![License](https://img.shields.io/badge/License-Apache2-SUCCESS)
 ![Pypi](https://img.shields.io/pypi/v/powerful-pipes-watch-bus)
@@ -17,6 +15,7 @@ Powerful Pipes Watcher - Multi-broker watcher tool with the power of UNIX Pipes
 - [Quick Start](#quick-start)
   - [WatchBus](#watchbus)
   - [SendBus](#sendbus)
+  - [As a Python library](#as-a-python-library)
 - [Supported brokers](#supported-brokers)
   - [Redis examples](#redis-examples)
     - [Redis Simple Queue Listener](#redis-simple-queue-listener)
