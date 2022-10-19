@@ -81,6 +81,23 @@ Above command will connect to the localhost Redis at default port, at database n
 
 With this command sendBus will send data to two broker queues.
 
+## As a Python library
+
+You also can use ``Powerful Pipes Watcher`` as a Python library in your Python code:
+
+```python
+from powerful_pipes_watch_bus import connect_bus
+
+def main():
+  redis_connection = connect_bus("redis+pubsub://localhost:6379/db=0&channel=my-channel")
+  
+  for message in redis_connection.read_json_messages():
+    redis_connection.send_json_message(message, "my-other-queue")
+
+if __name__ == "__main__":
+  main()
+```
+
 # Supported brokers
 
 Currently, supported brokers are:
