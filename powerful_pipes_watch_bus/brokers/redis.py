@@ -49,7 +49,7 @@ class RedisBusSimpleQueue(BusInterface):
 
         port = parsed.port or 6379
         host = parsed.hostname or "localhost"
-        db = query.get("db", 0)
+        db = int(query.get("db", 0))
         queue = query.get("queue", None)
 
         o = cls(
@@ -108,7 +108,7 @@ class RedisBusPubSub(BusInterface):
 
         port = parsed.port or 6379
         host = parsed.hostname or "localhost"
-        db = query.get("db", 0)
+        db = int(query.get("db", 0))
         channel = query.get("channel", None)
 
         o = cls(
@@ -192,12 +192,12 @@ class RedisStreams(BusInterface):
 
         port = parsed.port or 6379
         host = parsed.hostname or "localhost"
-        db = query.get("db", 0)
+        db = int(query.get("db", 0))
         stream = query.get("stream", None)
         group = query.get("group", None)
         consumer = query.get("consumer", None)
-        timeout = query.get("timeout", 5000)
-        batch_size = query.get("batch_size", 1)
+        timeout = int(query.get("timeout", 5000))
+        batch_size = int(query.get("batch_size", 1))
 
         if not stream:
             raise ValueError("Stream name is required")
