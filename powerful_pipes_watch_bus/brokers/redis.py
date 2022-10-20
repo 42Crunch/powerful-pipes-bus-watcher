@@ -157,7 +157,10 @@ class RedisStreams(BusInterface):
                     block=self.timeout
                 ):
                     for message_id, message_data in self._extract_message(message, "xreadgroup"):
-                        yield message_data
+                        try:
+                            yield read_json(message_data.get("message"))
+                        except:
+                            continue
 
                         self._connection.xack(self.stream_name, self.group_name, message_id)
 
@@ -174,7 +177,10 @@ class RedisStreams(BusInterface):
                     ):
 
                         for message_id, message_data in self._extract_message(message, "claimed"):
-                            yield message_data
+                            try:
+                                yield read_json(message_data.get("message"))
+                            except:
+                                continue
 
                             self._connection.xack(self.stream_name, self.group_name, message_id)
 
@@ -182,7 +188,7 @@ class RedisStreams(BusInterface):
     def send_json_message(self, data: dict, stream: str = None):
         stream = stream or self.stream_name
 
-        self._connection.xadd(stream,  data)
+        self._connection.xadd(stream, {"message": orjson.dumps(data)})
 
     @classmethod
     def open(cls, connection_string: str) -> RedisStreams:
