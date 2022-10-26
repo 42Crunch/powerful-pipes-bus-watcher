@@ -134,11 +134,13 @@ class RedisStreams(BusInterface):
             group_name: str = None,
             consumer_name: str = None,
             timeout: int = 5000,
-            batch_size: int = 1
+            batch_size: int = 1,
+            persistent: bool = False
     ):
         """Timeout is in milliseconds"""
         self.timeout = timeout
         self.batch_size = batch_size
+        self.persistent = persistent
         self.group_name = group_name
         self.stream_name = stream_name
         self.consumer_name = consumer_name
@@ -170,6 +172,9 @@ class RedisStreams(BusInterface):
 
                         self._connection.xack(self.stream_name, self.group_name, message_id)
 
+                        if not self.persistent:
+                            self._connection.xdel(self.stream_name, message_id)
+
                 else:
                     # If the worker has not received any messages for a while,
                     # it claims pending messages that were delivered to it but not yet acknowledged.
@@ -189,6 +194,9 @@ class RedisStreams(BusInterface):
                                 continue
 
                             self._connection.xack(self.stream_name, self.group_name, message_id)
+
+                            if not self.persistent:
+                                self._connection.xdel(self.stream_name, message_id)
 
 
     def send_json_message(self, data: dict, stream: str = None):
@@ -211,6 +219,7 @@ class RedisStreams(BusInterface):
         group = query.get("group", None)
         consumer = query.get("consumer", None)
         timeout = int(query.get("timeout", 5000))
+        persistent = bool(int(query.get("persistent", 0)))
         batch_size = int(query.get("batch_size", 1))
 
         if not stream:
@@ -229,7 +238,8 @@ class RedisStreams(BusInterface):
             group_name=group,
             consumer_name=consumer,
             timeout=timeout,
-            batch_size=batch_size
+            batch_size=batch_size,
+            persistent=persistent
         )
 
         return o

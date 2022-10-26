@@ -145,7 +145,7 @@ Default values:
 
 Bus connections for Redis should look like:
 
-`redis+streams://[[user]:[password]@][host][:port]/?stream=STRING[&db=INTEGER][&group=STRING][&consumer=STRING][&timeout=INTEGER][&batch_size=INTEGER]`
+`redis+streams://[[user]:[password]@][host][:port]/?stream=STRING[&db=INTEGER][&group=STRING][&consumer=STRING][&timeout=INTEGER][&batch_size=INTEGER][&persistent=BOOLEAN]`
 
 This mode can works as a consumer or as a producer, depending on the parameters.
 
@@ -169,6 +169,7 @@ Default values:
 - port: 6379
 - db: 1
 - consumer: "auto" (will be generated automatically)
+- persistent: False. If True, the consumer will be created as persistent.
 
 # Authors
 
