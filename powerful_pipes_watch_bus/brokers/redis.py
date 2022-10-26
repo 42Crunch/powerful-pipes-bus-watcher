@@ -49,11 +49,15 @@ class RedisBusSimpleQueue(BusInterface):
 
         port = parsed.port or 6379
         host = parsed.hostname or "localhost"
+        username = parsed.username or None
+        password = parsed.password or None
         db = int(query.get("db", 0))
         queue = query.get("queue", None)
 
         o = cls(
-            connection=redis.Redis(host, port, db),
+            connection=redis.Redis(
+                host, port, db, username, password
+            ),
             queue_name=queue
         )
 
@@ -108,11 +112,13 @@ class RedisBusPubSub(BusInterface):
 
         port = parsed.port or 6379
         host = parsed.hostname or "localhost"
+        username = parsed.username or None
+        password = parsed.password or None
         db = int(query.get("db", 0))
         channel = query.get("channel", None)
 
         o = cls(
-            connection=redis.Redis(host, port, db),
+            connection=redis.Redis(host, port, db, username, password),
             channel=channel
         )
 
@@ -198,6 +204,8 @@ class RedisStreams(BusInterface):
 
         port = parsed.port or 6379
         host = parsed.hostname or "localhost"
+        username = parsed.username or None
+        password = parsed.password or None
         db = int(query.get("db", 0))
         stream = query.get("stream", None)
         group = query.get("group", None)
@@ -212,7 +220,11 @@ class RedisStreams(BusInterface):
             consumer = consumer or uuid.uuid4().hex
 
         o = cls(
-            connection=redis.Redis(host, port, db, decode_responses=True),
+            connection=redis.Redis(
+                host, port, db, decode_responses=True,
+                password=password,
+                username=username
+            ),
             stream_name=stream,
             group_name=group,
             consumer_name=consumer,
