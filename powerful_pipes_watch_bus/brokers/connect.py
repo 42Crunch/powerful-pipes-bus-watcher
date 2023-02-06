@@ -6,13 +6,13 @@ from .redis import RedisBusSimpleQueue, RedisBusPubSub, RedisStreams
 
 def connect_bus(connection_string: str) -> RedisStreams | RedisBusSimpleQueue | RedisBusPubSub:
 
-    if connection_string.startswith("redis://"):
+    if connection_string.startswith(("redis://", "rediss://")):
         return RedisBusSimpleQueue.open(connection_string)
 
-    elif connection_string.startswith("redis+pubsub://"):
+    elif connection_string.startswith(("redis+pubsub://", "rediss+pubsub://")):
         return RedisBusPubSub.open(connection_string)
 
-    elif connection_string.startswith("redis+streams://"):
+    elif connection_string.startswith(("redis+streams://", "rediss+streams://")):
         return RedisStreams.open(connection_string)
 
     else:
